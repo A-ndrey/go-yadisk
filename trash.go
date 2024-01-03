@@ -39,8 +39,8 @@ type TrashContentParams struct {
 	Sort        string   `param:"sort"`
 }
 
-func (c *Client) TrashContent(ctx context.Context, params TrashContentParams) (*Resource, error) { // todo use correct response
-	resp := &Resource{}
+func (c *Client) TrashContent(ctx context.Context, params TrashContentParams) (*TrashResource, error) {
+	resp := &TrashResource{}
 
 	query, err := queryFromParams(&params)
 	if err != nil {

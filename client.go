@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -56,6 +57,7 @@ func (c *Client) doRequest(ctx context.Context, method string, path string, quer
 		if err != nil {
 			return err
 		}
+		log.Println(string(marshaledBytes))
 		body = bytes.NewReader(marshaledBytes)
 	}
 

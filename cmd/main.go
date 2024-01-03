@@ -21,17 +21,14 @@ func main() {
 		flag.PrintDefaults()
 	}
 	host := flag.String("h", "cloud-api.yandex.net", "Host for the all requests to API")
-	token := flag.String("t", "", "OAuth token")
 	params := flag.String("p", "{}", "Params for request in json format")
 	flag.Parse()
 
 	cmd := flag.Arg(0)
 
-	if token == nil || *token == "" {
-		*token = os.Getenv("YA_DISK_TOKEN")
-	}
+	token := os.Getenv("YA_DISK_TOKEN")
 
-	client := yadisk.NewClient(*token, *host, yadisk.WithHttpClient(&http.Client{Timeout: time.Minute}))
+	client := yadisk.NewClient(token, *host, yadisk.WithHttpClient(&http.Client{Timeout: time.Minute}))
 	Call(client, cmd, *params)
 }
 

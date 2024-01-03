@@ -2,7 +2,6 @@ package yadisk
 
 import (
 	"context"
-	"encoding/json"
 	"net/http"
 )
 
@@ -62,7 +61,7 @@ type UpdateResourceUserDataParams struct {
 	Path   string   `param:"path,required"`
 	Fields []string `param:"fields"`
 	Body   struct {
-		CustomProperties string `json:"custom_properties"`
+		CustomProperties map[string]any `json:"custom_properties"`
 	}
 }
 
@@ -74,12 +73,7 @@ func (c *Client) UpdateResourceUserData(ctx context.Context, params UpdateResour
 		return nil, err
 	}
 
-	body, err := json.Marshal(params.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	err = c.doRequest(ctx, http.MethodPatch, resourcesAPIPath, query, string(body), nil)
+	err = c.doRequest(ctx, http.MethodPatch, resourcesAPIPath, query, params.Body, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -18,8 +18,8 @@ type PublicResourceMetaInfoParams struct {
 	Sort        string   `param:"sort"`
 }
 
-func (c *Client) PublicResourceMetaInfo(ctx context.Context, params PublicResourceMetaInfoParams) (*Resource, error) { // todo use correct response
-	resp := &Resource{}
+func (c *Client) PublicResourceMetaInfo(ctx context.Context, params PublicResourceMetaInfoParams) (*PublicResource, error) {
+	resp := &PublicResource{}
 
 	query, err := queryFromParams(&params)
 	if err != nil {
