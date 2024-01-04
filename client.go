@@ -46,6 +46,50 @@ func NewClient(token string, host string, opts ...Opt) *Client {
 	return &c
 }
 
+func (c *Client) Download(ctx context.Context, downloadURL string, w io.Writer) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, downloadURL, nil)
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Authorization", "OAuth "+c.token)
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("(%d) %s", resp.StatusCode, resp.Status)
+	}
+
+	defer resp.Body.Close()
+
+	_, err = io.Copy(w, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Client) Upload(ctx context.Context, uploadURL string, r io.Reader) error {
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, r)
+	if err != nil {
+		return err
+	}
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != http.StatusCreated && resp.StatusCode != http.StatusAccepted {
+		return fmt.Errorf("(%d) %s", resp.StatusCode, resp.Status)
+	}
+
+	return nil
+}
+
 func (c *Client) doRequest(ctx context.Context, method string, path string, query url.Values, request, response any) error {
 	u := *c.url
 	u.Path = path
