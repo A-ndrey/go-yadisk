@@ -36,7 +36,7 @@ func main() {
         log.Fatal(err)
     }
 
-    fmt.Printf("Free space: %d\n", diskInfo.UsedSpace)
+    fmt.Printf("Used space: %d\n", diskInfo.UsedSpace)
     fmt.Printf("Total space: %d\n", diskInfo.TotalSpace)
 }
 ```
