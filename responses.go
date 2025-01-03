@@ -217,8 +217,16 @@ type Link struct {
 	Templated bool   `json:"templated,omitempty"`
 }
 
+type Status string
+
+const (
+	OpStatusSuccess    Status = "success"
+	OpStatusFailed     Status = "failed"
+	OpStatusInProgress Status = "in_progress"
+)
+
 type Operation struct {
-	Status string `json:"status,omitempty"`
+	Status Status `json:"status,omitempty"`
 }
 
 type Error struct {

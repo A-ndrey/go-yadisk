@@ -5,12 +5,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/A-ndrey/go-yadisk"
 	"net/http"
 	"os"
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/A-ndrey/go-yadisk"
 )
 
 func main() {
@@ -20,7 +21,7 @@ func main() {
 		fmt.Fprintf(flag.CommandLine.Output(), "\noptions:\n")
 		flag.PrintDefaults()
 	}
-	host := flag.String("h", "cloud-api.yandex.net", "Host for the all requests to API")
+	host := flag.String("h", yadisk.DefaultHost, "Host for the all requests to API")
 	params := flag.String("p", "{}", "Request's parameters in json format")
 	downloadURL := flag.String("d", "", "Download URL")
 	uploadURL := flag.String("u", "", "Upload URL")
